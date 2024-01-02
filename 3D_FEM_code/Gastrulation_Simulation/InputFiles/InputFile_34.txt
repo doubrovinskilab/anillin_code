@@ -1,0 +1,88 @@
+System_Type = IBM;
+System_OutputFolder = output_34;
+System_Dim = 3;
+System_dt =  0.1;              // This is the implicit dt [ms]
+System_end_time = 300000.0;    // End time [ms]
+System_dtime_save =   50.0;    // dtime to save data [ms]
+
+Fluid_Solver_Type = IMPLICIT;
+Fluid_Mesh_File = Fluid/P1_N20_s1.8_Half/Half_Part_Of_Ellipsoid;
+Fluid_Mesh_Type = gmsh;
+Fluid_Imp_eps = 1e-10;
+
+Fluid_ElemClass_U = P1b;
+Fluid_ElemClass_P = P1;
+Fluid_Calc_Viscosity = distance_to_solid_boundary;
+Fluid_Viscosity_mu = 1.0;
+Fluid_Viscosity_mu2 = 0.001;
+Fluid_Viscosity_Box_Xmin = -81.0;
+Fluid_Viscosity_Box_Xmax =  81.0;
+Fluid_Viscosity_Box_Nx = 251;
+Fluid_Viscosity_Box_Ymin = -81.0;
+Fluid_Viscosity_Box_Ymax =  81.0;
+Fluid_Viscosity_Box_Ny = 251;
+Fluid_Viscosity_Box_Zmin = -5.0;
+Fluid_Viscosity_Box_Zmax =  5.0;
+Fluid_Viscosity_Box_Nz = 1;
+Fluid_Viscosity_Solid_Gr = 0;
+Fluid_Domain_Center = 0.0,0.0,0.0;
+
+Solid_Mesh_File = Solid-Gmsh/half_basal_open/Embryo_Slice;
+Solid_Mesh_Type = vtk;
+Solid_Force_LE_Type = le_initial_disp_multi_k;
+Solid_Force_LE_K = 0.007;
+Solid_Force_LE_Multi_File = Solid-Gmsh/half_basal_open/LE_Edges_Multi_A5.0_L18.0_B18.0.txt;
+Solid_Force_ST_Type = st_trans_multi;
+Solid_Force_ST_Gamma_Func = linear;
+Solid_Force_ST_Gamma_a = 0.5e-8;
+Solid_Force_ST_Gamma_b = 0.0;
+Solid_Force_ST_Multi_File = Solid-Gmsh/half_basal_open/ST_Edges_Multi_A160.0_L16.0_B2.0_G0.5_LatteralRadialOnly.txt;
+Solid_Constrain_Type = three_axes_constrain;
+Solid_Constrain_Axis_Index = 2;
+Solid_Constrain_Axis_Value = 3.607;
+Solid_Constrain_Axis_Index2 = 2;
+Solid_Constrain_Axis_Value2 = -3.607;
+Solid_Constrain_Axis_Index3 = 0;
+Solid_Constrain_Axis_Value3 = 0.0;
+Solid_Constrain_ds = 0.2;
+Solid_SymmetryRegion_Type = one_region;
+Solid_SymmetryRegion_Axis_Index = 0;
+Solid_SymmetryRegion_Axis_Value = 0.0;
+Solid_SymmetryRegion_Axis_Side =  1;
+Solid_Dynamic_Mesh_Type = elastic_length;
+Solid_Dynamic_Mesh_Lmax = 1.8;
+Solid_Dynamic_Mesh_Lmin = 0.0;
+
+Reload = false;
+Reload_Time = 43750;
+Reload_Saved_Step = 875;
+Reload_Solid_File = output_34/S_875_new;
+Reload_Solid_LE_L0_File = output_34/L0_875.dat;
+Reload_Solid_LE_Multi_File = output_34/LE_M_875.dat;
+Reload_Solid_ST_Multi_File = output_34/ST_M_875.dat;
+
+// Boundary conditions: 
+// Group #, Type, Value1, Value2 (if possible)
+// Type: i=INTERNAL, d=DIRICHLET, n=NEUMANN, r=ROBIN
+
+Boundary_Ux = 0,n,0;   // BackAndFront
+Boundary_Uy = 0,n,0;   // BackAndFront
+Boundary_Uz = 0,d,0;   // BackAndFront
+Boundary_P  = 0,i;     // BackAndFront
+
+Boundary_Ux = 1,d,0;   // Wall
+Boundary_Uy = 1,d,0;   // Wall
+Boundary_Uz = 1,d,0;   // Wall
+Boundary_P  = 1,i;     // Wall
+
+Boundary_Ux = 2,d,0;   // Side
+Boundary_Uy = 2,n,0;   // Side
+Boundary_Uz = 2,n,0;   // Side
+Boundary_P  = 2,i;     // Side
+
+Boundary_S = 0,nb;
+
+DirichletNode_Coor = 0.0,-100,0.0;
+DirichletNode_PValue = 0.0;
+
+
